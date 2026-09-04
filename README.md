@@ -439,32 +439,51 @@ Rules, in order of priority:
 1. GROUND EVERY CLAIM. After each factual statement, cite the source it came
 from as [S1], [S2], etc. A statement with no citation is not allowed.
 
-2. REFUSE WHEN THE SOURCES DO NOT ANSWER THE QUESTION. If the sources are
-about a different subject than the question asks about, say exactly what you
-do and do not have... This applies even when the sources are on an adjacent
-topic that shares vocabulary with the question -- for example, sources about
-software engineering interviews do not answer a question about nursing
-interviews, and sources about salary negotiation do not answer a question
-about mortgage or rent negotiation.
+2. REFUSE ONLY WHEN THE SOURCES ARE ABOUT A DIFFERENT SUBJECT, not merely a
+narrower one. Refuse when the sources are about a genuinely different topic
+that happens to share vocabulary with the question -- sources about software
+engineering interviews do not answer a question about nursing interviews, and
+sources about salary negotiation do not answer a question about mortgage or
+rent negotiation. Do NOT refuse when the sources are on the exact same
+subject as the question but simply don't name a specific company, give an
+exact number, or use the question's exact wording -- ANSWER using what the
+sources say, and note plainly if they aren't company-specific.
 
 3. REPORT DISAGREEMENT, DO NOT RESOLVE IT. If two sources conflict, say so
 and attribute each position... Do not average them.
 
-4. DO NOT GENERALISE FROM A NARROWER SOURCE. If the question names a
-specific company and the sources discuss interviewing generally, say the
-sources do not cover that company specifically.
+4. DO NOT MISREPRESENT WHAT A SOURCE IS ABOUT. If a retrieved chunk is from a
+thread named after a specific company but the chunk's own text does not
+actually discuss that company, say so plainly rather than presenting it as
+company-specific information.
 
 5. FLAG AGE WHEN IT MATTERS.
 
 6. QUOTE NUMBERS EXACTLY as they appear.
 ```
 
-Rule 2's explicit adjacent-domain examples exist because a relevance-score cutoff alone cannot make
-this decision: measured on the real index, "What are good interview questions for a nursing job?"
+**This prompt went through one real revision, caught by testing beyond the five official evaluation
+questions.** The first version of rule 2 conflated "different subject" with "narrower subject,"
+and it over-fired: tested against 15 natural questions a real user might ask (not the five official
+ones, chosen precisely because they weren't cherry-picked for a specific number), **6 of 15 (40%)
+were falsely refused** despite retrieval clearing the relevance floor for every one of them —
+"How do I prepare for a Google interview?" and "How long does the hiring process take?" were both
+refused even though retrieval returned genuinely on-topic, substantive chunks (general prep advice,
+a 3-month preparation recommendation, interview-length data). The prompt could not distinguish "this
+is a different subject" (correct to refuse) from "this is the same subject but doesn't name Google
+specifically or give one clean number" (should answer, with a caveat). Splitting that into rules 2
+and 4 above dropped the false-refusal rate to **1/15**, and the one remaining refusal (interview
+attire) is legitimate — the retrieved chunks for it are unrelated LeetCode problems, a genuine
+retrieval miss, not a prompt overreach. All three deliberate out-of-scope controls (mortgage, nursing,
+capital of Australia) still correctly refuse after the change. Reproduce with `scratch/probe_gen4.py`.
+
+The original over-broad rule exists because a relevance-score cutoff alone cannot decide adjacent-
+domain scope: measured on the real index, "What are good interview questions for a nursing job?"
 scores **0.460** best-match similarity, which is *higher* than the legitimate in-domain question
 "Should I take the first offer?" at 0.451. The two bands overlap (window = −0.009 across 10
-in-domain and 6 out-of-domain test questions), so no single number distinguishes them. Grounding is
-therefore enforced in **three places, not one**:
+in-domain and 6 out-of-domain test questions), so no single number distinguishes them — but the fix
+above shows the answer isn't a blunter refusal rule, it's a *more precise* one. Grounding is
+enforced in **three places, not one**:
 
 1. **Retrieval floor** (`RELEVANCE_FLOOR = 0.35` in `query_index.py`) — a cheap pre-filter that
    rejects only queries with no plausible relationship to the corpus at all (e.g. "capital of
@@ -499,7 +518,7 @@ name.
 Query: *"How many LeetCode problems did someone solve before passing a FAANG interview, and what was the difficulty split?"*
 
 Response:
-> He solved 175 LeetCode problems in total, broken down as 52 easy, 106 medium, and 17 hard tasks before passing his FAANG interview [S1].
+> Andrei Marchenko says he solved 175 LeetCode problems before landing a FAANG role, broken down as 52 easy, 106 medium, and 17 hard problems [S1].
 
 Source attribution: `[S1]` Andrei Marchenko — Cracking the FAANG interview (2024), blog, similarity 0.666, `documents/16-marchenko-postmortem.txt`, chunk 21/34, https://amarchenko.dev/blog/2024-01-17-interview-experience/
 
@@ -510,10 +529,15 @@ Source attribution: `[S1]` Andrei Marchenko — Cracking the FAANG interview (20
 Query: *"Is the first offer a company gives the best package they can offer?"*
 
 Response:
-> No. According to the Tech Interview Handbook's negotiation guide, "The initial offer that you are given is never the best package that the company can offer" — the guide advises that most offers have room for negotiation and you can usually improve the terms [S2].
+> No. According to the Tech Interview Handbook, "the initial offer that you are given is never the best package that the company can offer" — recruiters expect candidates to negotiate and most offers have room for improvement [S2].
 
 Source attribution: `[S2]` Tech Interview Handbook — negotiation, guide, similarity 0.516, `documents/07-negotiation.txt`, chunk 1/8, https://raw.githubusercontent.com/yangshun/tech-interview-handbook/main/apps/website/contents/negotiation.md
 (Retrieval returned `08-negotiation-rules.txt` at higher similarity as `[S1]`, but the model correctly attributed the exact quoted claim to `[S2]`, the source that actually contains that sentence — a check worth doing explicitly, since a citation to the wrong same-topic source would not otherwise be obvious.)
+
+*Note on reproducibility:* re-running either query produces the same facts and citations but not
+always identical wording — Groq generation is not perfectly deterministic even at `temperature=0`.
+Retrieval (the embeddings and similarity scores) is fully deterministic; only the LLM's phrasing
+varies slightly between runs.
 
 ---
 
@@ -555,7 +579,7 @@ Run the interface with `.venv/bin/python app.py`, which opens a local Gradio pag
 > **User:** How difficult are the LeetCode questions in entry-level interviews, and do interviewers give hints?
 
 > **System:**
-> The experience shared in the Levels.fyi thread notes that entry-level LeetCode-style questions are **typically of medium difficulty**. Interviewers usually **listen to your thought process** and will often **guide you toward a solution or even give a hint** if you're stuck [S1].
+> The experience shared in the Levels.fyi thread indicates that entry-level LeetCode-style questions are **typically of medium difficulty**. The respondent notes that "most leetcode style questions are usually mediums" and that interviewers "will usually guide you in the right direction, or maybe even a hint" as long as you explain your thought process [S1].
 >
 > **Sources**
 > ```
@@ -581,11 +605,11 @@ for each question. Full transcripts in that script's output; summarized here.
 
 | # | Question | Expected answer | System response (summarized) | Retrieval quality | Response accuracy |
 |---|----------|-----------------|------------------------------|-------------------|-------------------|
-| 1 | How many LeetCode problems did an engineer report solving before passing a FAANG interview, and what was the difficulty split? | 175 total — 52 easy, 106 medium, 17 hard | "He solved 175 LeetCode problems in total, broken down as 52 easy, 106 medium, and 17 hard tasks before passing his FAANG interview [S1]." | Relevant (top-1 sim 0.666, correct source ranked #1) | Accurate |
+| 1 | How many LeetCode problems did an engineer report solving before passing a FAANG interview, and what was the difficulty split? | 175 total — 52 easy, 106 medium, 17 hard | "Andrei Marchenko says he solved 175 LeetCode problems before landing a FAANG role, broken down as 52 easy, 106 medium, and 17 hard problems [S1]." | Relevant (top-1 sim 0.666, correct source ranked #1) | Accurate |
 | 2 | What share of recruiting leaders are conducting interviews in person to combat candidate fraud? | 72.4% | "According to a recent Gartner survey, 72.4% of recruiting leaders say they are now conducting interviews in-person to combat candidate fraud [S1][S2]." | Relevant (top-1 sim 0.736, correct source ranked #1) | Accurate |
 | 3 | What difficulty are LeetCode questions in entry-level interviews, and do interviewers give hints? | Mostly mediums; interviewers usually guide you or give a hint | "...entry-level LeetCode-style questions are typically of medium difficulty. Interviewers usually listen to your thought process and will often guide you toward a solution or even give a hint if you're stuck [S1]." | Relevant (top-1 sim 0.727, correct source ranked #1) | Accurate |
 | 4 | Is the first offer a company gives the best package they can offer? | No — the initial offer is never the best package | "No. ... 'The initial offer that you are given is never the best package that the company can offer' — the guide advises... you can usually improve the terms [S2]." | Relevant (correct source at rank #2, sim 0.516; a same-topic sibling source, `08-negotiation-rules.txt`, ranked #1 at 0.542) | Accurate — and the model correctly attributed the exact quoted claim to the source that actually contains it, not to the higher-ranked sibling |
-| 5 | How much more often do women abandon interview practice than men after a single bad interview? | 7 times more often | "Women quit interview practice about 7 times more often than men after just one bad interview — as reported in both the 'technical interview practice gap' post and the 'interview performance is kind of arbitrary' post [S1][S2]." | Relevant (top-1 sim 0.702) | **Partially accurate** — the "7 times" figure is correct, but "reported in both posts" overstates independent corroboration: `11-iio-arbitrary.txt` and `13-iio-practice-gap.txt` contain the **identical sentence** ("In a previous post, we talked about how women quit interview practice 7 times more often...") because one interviewing.io post is referencing the other, not because two separate studies converged on the number. The system had no way to detect this — both chunks score 0.665, are literally the same text, and nothing in the metadata marks one as a self-citation of the other. |
+| 5 | How much more often do women abandon interview practice than men after a single bad interview? | 7 times more often | "Women quit interview practice 7 times more often than men after just one bad interview [S1][S2]." | Relevant (top-1 sim 0.702) | **Partially accurate** — the "7 times" figure is correct, and citing two sources for one fact looks like solid corroboration, but it isn't: `11-iio-arbitrary.txt` and `13-iio-practice-gap.txt` contain the **identical sentence** ("In a previous post, we talked about how women quit interview practice 7 times more often...") because one interviewing.io post is referencing the other, not because two separate studies converged on the number. Both chunks score 0.665 and are literally the same text; nothing in the metadata marks one as a self-citation of the other, so the system (and a reader) cannot tell "two sources agree" from "one source quoting itself." |
 
 **Retrieval quality:** Relevant / Partially relevant / Off-target
 **Response accuracy:** Accurate / Partially accurate / Inaccurate
@@ -732,3 +756,27 @@ domains (negotiation, interviewing).
   syntax generally, and we validated the new threshold by measuring the actual separation between
   content tables (0.05–0.74) and link tables (0.81–0.99) in my corpus before trusting it. Reading the
   dropped samples, not the count, is what caught this — a count alone looked fine.
+
+**Instance 3 — a grounding rule that refused too much, caught only by testing beyond the required
+questions**
+
+- *What I gave the AI:* a report that the deployed system seemed to be refusing most questions I
+  asked it, and a request to find out why before assuming the corpus itself was the problem.
+- *What it produced:* rather than guess, the AI tested the actual retrieval scores for 15 natural
+  questions first (all cleared the relevance floor — so not a retrieval bug), then tested full
+  generation on the same 15 and found 6 of 15 (40%) were being refused by the LLM despite having
+  on-topic, substantive retrieved chunks — e.g. "How do I prepare for a Google interview?" was
+  refused even though retrieval returned the general SWE interview guide and a coding study plan.
+  Root cause: the grounding prompt's anti-hallucination rule conflated "sources are about a
+  different subject" (should refuse — mortgage vs. job-offer negotiation) with "sources are on the
+  same subject but don't name this specific company" (should answer, with a caveat — general prep
+  advice does apply to a Google interview).
+- *What I changed or overrode:* I had the AI split the single overloaded rule into two — one for
+  genuinely different subjects, one for not overstating what an on-topic chunk says about a named
+  entity — and re-test before claiming it was fixed. Verified before merging: false refusals on the
+  same 15 questions dropped from 6/15 to 1/15 (the one remaining refusal is a legitimate retrieval
+  miss on a genuinely uncovered topic, interview attire), all three deliberate out-of-scope controls
+  still correctly refused, and the five official evaluation questions were unaffected. I did not
+  accept "it's fixed" as a claim — I asked for the before/after numbers on the same test set, and
+  that comparison is what's in the README's Grounded Generation section, not a description of the
+  fix in the abstract.
