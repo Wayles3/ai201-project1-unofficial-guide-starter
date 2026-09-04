@@ -1,0 +1,24 @@
+---
+id: 25
+title: Google Careers — official SWE interview prep guide
+type: official
+url: https://www.google.com/about/careers/applications/candidate-prep/swe
+fetched: 2026-09-02
+index: false
+---
+
+Software Engineer (SWE) interview prep guide - Google Careers
+
+Careers Careers
+
+home Home
+
+work_outline Jobs
+
+noogler_hat Students
+
+google How we work
+
+handyman How we hire
+
+person_outline Your career

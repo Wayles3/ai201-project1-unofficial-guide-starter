@@ -1,0 +1,160 @@
+---
+id: 17
+title: Computerworld — companies bring back in-person interviews
+type: news
+url: https://www.computerworld.com/article/4044734/to-counter-ai-cheating-companies-bring-back-in-person-job-interviews.html
+fetched: 2026-09-02
+index: true
+---
+
+To counter AI cheating, companies bring back in-person job interviews – Computerworld
+
+Topics
+
+Analytics
+
+Android
+
+Apple
+
+Artificial Intelligence
+
+Augmented Reality
+
+Cloud Computing
+
+Collaboration Software
+
+Computers and Peripherals
+
+Data Center
+
+Emerging Technology
+
+Enterprise Applications
+
+Enterprise Buyer’s Guides
+
+Generative AI
+
+Hybrid and Remote Work
+
+Industry
+
+IT Leadership
+
+IT Management
+
+IT Operations
+
+Mobile
+
+Networking
+
+Office Suites
+
+Operating Systems
+
+Productivity Software
+
+Security
+
+Vendors and Providers
+
+Windows
+
+by Lucas Mearian
+
+To counter AI cheating, companies bring back in-person job interviews
+
+news analysis
+
+Aug 26, 2025 10 mins
+
+AI-enabled cheating has surged, particularly in virtual technical job interviews. Would-be job candidates increasingly use AI tools off-camera to feed them answers, such as responses to coding challenges, and in some cases turning to deepfake technology to impersonate applicants.
+
+To battle that trend, more and more companies are ditching screens for handshakes — bringing back in-person job interviews.
+
+According to a recent Gartner survey , 72.4% of recruiting leaders reported they are currently conducting interviews in-person to combat fraud. Gartner defines candidate fraud as a would-be hire that pretends to be someone else and/or has someone else complete an interview pretending to be them.
+
+Google, Cisco and McKinsey & Co. have all re-instituted in-person interviews for some job candidates over the past year. “Remote work and advancements in AI have made it easier than ever for fake candidates to infiltrate the hiring process,” said Scott McGuckin, vice president of global talent acquisition at Cisco. “Identifying these threats is our priority, which is why we are adapting our hiring process to include increased verification steps and enhanced background checks that may involve an in-person component.
+
+“We’ve also rolled out targeted training to recruiters and hiring managers to drive awareness of these issues,” McGuckin said, adding that AI can be used in interviews when relevant, such as during specific exercises. Cisco has an “evolving framework” to ensure both technical and human skills are fairly assessed, and candidates are informed when AI use is appropriate.
+
+“If a candidate is not explicitly invited to use AI during the assessment process, then it should be considered off-limits,” McGuckin said.
+
+“As AI continues to transform work, we believe face-to-face interactions are necessary to assess the human qualities that can’t be automated and that are core to how we partner with clients — things like judgment, empathy, creativity, and connection,” a McKinsey spokesperson said in an email reply to Computerworld . “While meeting candidates directly also reduces the risk of AI misuse, the greater value is in revealing human strengths no technology can replicate.”
+
+A Google spokesperson said the company has become more wary of AI abuses by job candidates and banned the use of AI tools during virtual interviews.
+
+“For engineers, we also want to make sure candidates have the fundamental coding skills necessary for the roles they’re interviewing for,” the spokesperson said. “It’s [also] important for candidates to come to our offices to experience our culture earlier in the process to get them excited about working here.”
+
+Joel Wolfe, president of HiredSupport, a business process outsourcing (BPO) provider, said his firm has seen “a massive uptick in cheating during interviews,” especially when hiring developers or for roles requiring knowledge of specific tech and terminology. For example, HiredSupport uses a JavaScript library called Socket.io — an uncommon module that requires job candidates to have hands-on experience. If candidates don’t have that experience, it’s quickly obvious, Wolfe said.
+
+Lately, job candidates have been acing Socket.io quizzes, which is rare, he said. But when asked by hiring managers for the reasoning behind the answers they gave, the candidates can’t explain them.
+
+“That’s the giveaway: they’re using AI tools like ChatGPT [and other conversational AI] to cheat through the early rounds, parroting answers without real understanding. Once we go deeper, the knowledge falls apart,” Wolfe said. He compared the tactic to using a calculator to find answers to a math quiz in school.
+
+“It’s a clear indication of cheating during an interview,” Wolfe said.
+
+Virtual job interviews are now common, driven by remote work and a desire by HR departments to speed up and streamline the hiring process. And one in five US and UK employers now use generative AI tools for initial candidate interviews , making AI-based hiring more mainstream.
+
+A  report last year from Indeed  on data-driven hiring showed that both employers and job seekers support skills-first hiring over more hiring based on traditional degrees. That also means a layperson, without formal training, is more able to fake workplace knowledge by using genAI.
+
+Gartner Inc.
+
+AI has proven benefits for both job seekers and hiring managers/recruiters. Its use in the job search process grew 6.4% over the past year, while use in core tasks surged even higher, according to online employment marketplace ZipRecruiter.
+
+The share of job seekers using AI to draft and refine resumes jumped 39% over last year, while AI-assisted cover letter writing climbed 41%, and AI-based interview prep rose 44%, according to the firm.
+
+Additionally, the use of AI tools that match candidates with the right opportunities — such as ZipRecruiter’s AI-powered career advisor, “Phil” — increased 30% in the past year. “And the payoff is clear: job seekers who used AI in their search received twice as many offers on average, while only submitting 40% more applications,” said ZipRecruiter Career Expert Sam DeMase.
+
+DeMase said there’s a clear line between acceptable use of AI by job seekers and outright deception.
+
+Candidates should use AI as a tool for ideas and feedback — not to write resumes or script interviews. Use it to spot key skills, refine sections, or prep for questions, but always keep it honest and human. Recruiters can tell the difference, DeMase said.
+
+Emi Chiba, an HR tech analyst with research firm Gartner, said it can be hard to know exactly how many people are using AI to cheat on interviews. But clients have told her that if they are hiring for a remote IT role, “they can expect at least half of the applications received on that role to be false.”
+
+At the same time, she noted, it’s unrealistic to demand an AI-free hiring process while expecting employees to be skilled in using the technology at work. Organizations should clearly communicate AI use expectations, allowing it in some parts of hiring while reserving others as AI-free.
+
+“That is one pro for the in-person interview…, it makes it much easier to enforce an AI-free zone in real time,” she said.
+
+While in-person interviews can help uncover fake candidates, alone they’re not enough, Chiba said. To fight fraud, companies need a layered defense: tests, ID checks, and smart screening “at every step.”
+
+ZipRecruiter
+
+HR and hiring managers should insist on well-lit video interviews, watch for delays or mismatches, ask follow-up questions to spot AI use and verify resume details with background checks and geolocation data.
+
+“Some assessment or interview platforms can look at geolocation data, use this to ensure consistency with the resume and application,” Chiba said. “The best strategy for organizations is to have transparent and consistent communications about the expectations of AI use throughout the recruiting process and at the organization itself.”
+
+Identity verification (IDV) tools have become the biggest change to the recruiting process, as a hiring manager can require a candidate to use their phone to snap a selfie and ID, verifying document authenticity, identity, liveness, and location. Repeated use can also track consistency in location and device, Chiba said.
+
+“If you deploy IDV processes repeatedly, you can also watch for consistency with location and device used to complete each verification,” she said.
+
+Lindsey Zuloaga, chief data scientist at HR tech provider  Hirevue , said cheating in hiring can result in costly and time-consuming mis-hires that harm companies and honest candidates. But all candidates aren’t necessarily using AI for nefarious reasons.
+
+Cheating often stems from fear as high-stakes pressure can push people to cut corners they normally wouldn’t, Zuloaga said. “This is just another reason it’s important to provide the utmost transparency for applicants,” she said. “Candidates who know exactly what will be expected of them can prepare adequately, perform their best in the interview or assessment, and ideally feel less motivated to cheat.”
+
+Hirevue data shows that ChatGPT and other forms of genAI tend to perform poorly on virtual job tryouts — and only average on AI-scored assessments, according Zuloaga. “This means top candidates still stand out,” she said.
+
+Cheating in hiring is hard to define because preparation and deception often blur — like using job coaches or notes versus allowing AI to write your answers.
+
+“We define cheating as ‘deceptive or dishonest actions taken by a candidate to misrepresent or embellish their knowledge, skills, abilities, or potential for the role,’” Zuloaga said. “Each organization should define cheating and share their standards for everyone taking an interview or pre-hire skills assessment.”
+
+Balancing a positive candidate experience with business needs is key: candidates should feel the process is fair and accessible, while employers must collect enough info to make smart hires.
+
+Even with the rise in cheating, the use of remote candidate interviews isn’t likely to go away anytime soon, if ever.
+
+“We still see huge demand for virtual interviews and skills assessments. In Q2 of this year, our customers conducted close to three million video interviews and nearly seven million assessments,” Zuloaga said. “Certain industries and roles may always require additional security layers (e.g., government roles), but I’m confident that virtual technology can keep up with those requirements, and any shift toward in-person will be short-lived.”
+
+Conversely, hiring managers and HR departments are beginning to use AI to perform initial interviews of candidates .
+
+Armando Franco, director of technology modernization at IT staffing and talent management firm TEKsystems Global Services, pointed to reports that Meta will be using AI to assist in its interviews for software engineering candidates.
+
+“To me, Meta’s move to allow AI during coding interviews isn’t just a novelty, it’s an inevitability,” he said. “The role of a software engineer is rapidly evolving. We’re not simply hiring people to write code anymore, we’re hiring people to design, collaborate with, and optimize AI systems that write the code.”
+
+The shift, Franco said, reflects reality: developers already use AI to build, debug, and refactor code. Letting them do the same in interviews raises the bar—it tests how well they integrate AI into real-world workflows.
+
+While some companies still view AI tools in interviews as cheating, I think that perspective will fade quickly,” he said. “My teams are already seeing how software velocity, quality, and innovation improve when teams embrace GenAI responsibly. Those who resist this shift may find themselves hiring for a world that no longer exists.”
+
+IT Jobs Hiring Artificial Intelligence Generative AI Emerging Technology

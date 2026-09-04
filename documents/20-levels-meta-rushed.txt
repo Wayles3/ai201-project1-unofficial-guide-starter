@@ -1,0 +1,60 @@
+---
+id: 20
+title: Levels.fyi — Interview with Meta, superficial and rushed?
+type: thread
+url: https://www.levels.fyi/community/thread/WZHFPx/interview-with-meta-superficial-and-rushed
+fetched: 2026-09-02
+index: true
+---
+
+iknow   in   🖥️   Tech
+
+Software Engineer
+
+Interview with Meta, superficial and rushed?
+
+I recently had an interview with Meta for SSE and I was wondering if other people’s experiences have been similar to mine. This was the first interview, one hour long. My interview felt very rushed, I think the interviewer tried to cram too many things in. Interviewer spoke very fast the whole time and expected me to answer equally fast.
+
+First he asked me to speak about myself but at the same time he told me not to provide too much detail because he already had my resume, which made it sound like he was actually not interested in the answer and was just asking out of process.
+
+Behavioural questions were a bit frustrating because he wouldn’t even give me time to lay out the context, he would interrupt me and tell me to shorten my answers and be more concise. It already felt like I was speaking way too fast for a normal conversation.
+
+Then he tried to fit two coding exercises in the remaining time. Maybe I’m just incredibly subpar in terms of coding skills but I left with the feeling that it’s not possible to resolve those exercises that quickly unless you already know the answer. In fact, he was trying to evaluate my code  so quickly that he wouldn’t even assess it properly, at some points he would tell me something doesn’t work and it turned out he was just misreading it.
+
+Finally, I was supposed to have 5 minutes at the end to ask questions but no chance, we ran out of time and he just left the Zoom meeting.
+
+Overall, a rather chaotic and disappointing experience, I didn’t feel properly evaluated. Has this been the case for others too?
+
+EDIT: for what is worth, I passed the interview and I've been called for the next stage.
+
+lookingforinsights Technical Program Manager   at  Amazon
+
+Your experience isn’t unique. Meta’s interviewing style really is one of the worsts as they try to capture “positive signal” using folks who really are not ready to interview. It’s a 50/50 crap shoot if you get someone who is a reasonable interviewer or not. Keep it up though, as the variability also can swing in your favor.
+
+iknow Software Engineer
+
+That’s interesting, it did look like he was just following a script and struggling to manage time. BTW, what is “positive signal”?
+
+kpg231 Data Scientist
+
+This is expected in a Meta interview. The phone screen round has a set format and essentially tests you for speed and ability to get to a solution quickly. If the interviewer spent more time talking you would likely have less time to work on your solution.
+
+mightymouse121 Software Engineer   at  Populus Group
+
+I too had a similar experience two weeks ago when I participated in the screening interview. I solved both the problems in 30 mins. But I didn’t provide good examples for behavioral questions. Firstly, I wasn’t told that there will be few behavioral questions asked during screening, and the main focus will be coding. I solved both in time and with efficient algorithm, but still I didn’t get a positive response to move to the next stage. I’m not sure how one can answer 2 programming questions, coming up with ideal examples for 2 behavioral/work experience based questions and articulating it within 45 mins. Too much for a screening round I would say.
+
+adk97 Software Engineer
+
+I think they expect the answers to be prepared already. You can find top 20 behavioral questions and prepare answers for them.
+
+Kennethdashen Hardware Engineer
+
+Bro, same here. I interviewed for a L5 Production Engineering role and he gave me 1 medium leet code question that was a 3 part problem. It was a minesweeper problem. All of it was rushed, and I'm glad not to work there. I'm currently going through hiring at Google, and I'm awaiting an offer from SpaceX to work for Darth Musk.
+
+iknow Software Engineer
+
+Good luck! If you do get into SpaceX please tell us how it is in there.
+
+mctang719 Software Engineer
+
+I had similar experience with GRE. I got very limited time to answer the questions after reading a long article. I felt rushed. But it’s what they are looking for. Meta is looking for people who cared enough and have gone through thorough preparation process aka leetcode. Is the process good? Hard to answer. But they are not charity and have their own culture they try to keep and develop.

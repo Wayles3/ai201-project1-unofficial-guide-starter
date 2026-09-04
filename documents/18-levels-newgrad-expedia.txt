@@ -1,0 +1,44 @@
+---
+id: 18
+title: Levels.fyi — New grad interview experience (Expedia, Blue Origin, eBay)
+type: thread
+url: https://www.levels.fyi/community/thread/1LBjuA/new-grad-interview-experience--expedia-group-blue-origin-ebay
+fetched: 2026-09-02
+index: true
+---
+
+kyle04   in   🖥️   Tech
+
+Software Engineer
+
+New Grad Interview Experience (Expedia Group, Blue Origin, eBay)
+
+I've recently heard back from the companies listed above for entry-level software engineer positions.
+
+I was wondering what the interview experience was like for these companies. How difficult were the leetcode questions, did the interviewers give hints, etc?
+
+Thanks!
+
+ramenenjoyer Software Engineer   at  OpenAI
+
+Not a new grad, but I've been hearing that some teams have been hiring new grads still at my company. The market has definitely been the toughest for you guys especially, but there's still hope!
+
+defaanged Recruiter   at  Google
+
+With those new AI tools like interview coder, I feel like the leetcode questions must've gotten harder... I don't actually know though, I've been fortunate enough to keep my job through this market
+
+Robotsarecool21 Software Engineer
+
+I don’t know if it will affect it because the ai can do the hard ones as well. They will likely be looking more to your explanations and do more in person interviews
+
+yeef Software Engineer   at  The University of Texas at El Paso
+
+Im also applying and interviewing with companies for entry level positions, and have noticed most leetcode style questions are usually mediums. As long as you are explaining your thought process and decision making to the interviewer, they will usually guide you in the right direction, or maybe even a hint
+
+machinerose Product Manager
+
+I was interviewed by IBM and then they did their layoffs so it looks like it’s a no go from here.
+
+m357 Software Engineer   at  Stony Brook University
+
+What’s your background like? I’ve applied to those companies and have done multiple internships but haven’t heard back

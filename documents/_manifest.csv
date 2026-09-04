@@ -1,0 +1,26 @@
+id,slug,title,type,url,status,chars,words,paragraphs,index
+1,swe-interview-guide,Tech Interview Handbook — SWE interview guide,guide,https://raw.githubusercontent.com/yangshun/tech-interview-handbook/main/apps/website/contents/software-engineering-interview-guide.md,ok,20515,3002,88,True
+2,behavioral-interview,Tech Interview Handbook — behavioral interview,guide,https://raw.githubusercontent.com/yangshun/tech-interview-handbook/main/apps/website/contents/behavioral-interview.md,ok,13326,1952,53,True
+3,behavioral-questions,Tech Interview Handbook — behavioral questions,guide,https://raw.githubusercontent.com/yangshun/tech-interview-handbook/main/apps/website/contents/behavioral-interview-questions.md,ok,9574,1596,38,True
+4,coding-study-plan,Tech Interview Handbook — coding interview study plan,guide,https://raw.githubusercontent.com/yangshun/tech-interview-handbook/main/apps/website/contents/coding-interview-study-plan.md,ok,7749,1178,35,True
+5,coding-rubrics,Tech Interview Handbook — coding interview rubrics,guide,https://raw.githubusercontent.com/yangshun/tech-interview-handbook/main/apps/website/contents/coding-interview-rubrics.md,ok,8162,1287,41,True
+6,behavioral-rubrics,Tech Interview Handbook — behavioral interview rubrics,guide,https://raw.githubusercontent.com/yangshun/tech-interview-handbook/main/apps/website/contents/behavioral-interview-rubrics.md,ok,8406,1425,46,True
+7,negotiation,Tech Interview Handbook — negotiation,guide,https://raw.githubusercontent.com/yangshun/tech-interview-handbook/main/apps/website/contents/negotiation.md,ok,3643,502,16,True
+8,negotiation-rules,Tech Interview Handbook — negotiation rules,guide,https://raw.githubusercontent.com/yangshun/tech-interview-handbook/main/apps/website/contents/negotiation-rules.md,ok,9119,1514,43,True
+9,resume,Tech Interview Handbook — resume guide,guide,https://raw.githubusercontent.com/yangshun/tech-interview-handbook/main/apps/website/contents/resume.md,ok,23057,3571,166,True
+10,system-design-primer,System Design Primer — main README,guide,https://raw.githubusercontent.com/donnemartin/system-design-primer/master/README.md,ok,105105,11820,561,True
+11,iio-arbitrary,interviewing.io — interview performance is kind of arbitrary,blog,https://interviewing.io/blog/after-a-lot-more-data-technical-interview-performance-really-is-kind-of-arbitrary,ok,9905,1690,65,True
+12,iio-600-interviews,interviewing.io — 5 common problem areas from 600+ interviews,blog,https://interviewing.io/blog/ive-conducted-over-600-technical-interviews-on-interviewing-io-here-are-5-common-problem-areas-ive-seen,ok,20102,3449,112,True
+13,iio-practice-gap,interviewing.io — the technical interview practice gap,blog,https://interviewing.io/blog/technical-interview-practice-gap,ok,16495,2641,79,True
+14,iio-language-style,interviewing.io — language and code style analysis,blog,https://interviewing.io/blog/we-analyzed-thousands-of-technical-interviews-on-everything-from-language-to-code-style-here-s-what-we-found,ok,25006,4043,105,True
+15,levels-negotiation-guide,Levels.fyi — Ultimate Negotiation Guide,guide,https://www.levels.fyi/blog/ultimate-negotiation-guide.html,ok,26291,4249,182,True
+16,marchenko-postmortem,Andrei Marchenko — Cracking the FAANG interview (2024),blog,https://amarchenko.dev/blog/2024-01-17-interview-experience/,ok,18880,3229,110,True
+17,computerworld-ai-cheating,Computerworld — companies bring back in-person interviews,news,https://www.computerworld.com/article/4044734/to-counter-ai-cheating-companies-bring-back-in-person-job-interviews.html,ok,11545,1782,76,True
+18,levels-newgrad-expedia,"Levels.fyi — New grad interview experience (Expedia, Blue Origin, eBay)",thread,https://www.levels.fyi/community/thread/1LBjuA/new-grad-interview-experience--expedia-group-blue-origin-ebay,ok,1729,277,18,True
+19,levels-amazon-study,Levels.fyi — How I studied for my Amazon SWE interview,thread,https://www.levels.fyi/community/thread/P2ow0q/how-i-studied-for-my-amazon-software-engineer-interview,ok,1588,232,14,True
+20,levels-meta-rushed,"Levels.fyi — Interview with Meta, superficial and rushed?",thread,https://www.levels.fyi/community/thread/WZHFPx/interview-with-meta-superficial-and-rushed,ok,4315,754,26,True
+21,levels-netflix-newgrad,Levels.fyi — Interview process for new grad at Netflix (2022),thread,https://www.levels.fyi/community/thread/qhpgkj/interview-process-for-new-grad-at-netflix,ok,396,66,4,True
+22,levels-paypal-newgrad,Levels.fyi — PayPal SWE new grad interview,thread,https://www.levels.fyi/community/thread/cgmY4y/interview-paypal-software-engineer-new-grad,ok,576,92,6,True
+23,hn-ai-killed-interview,Hacker News — AI killed the tech interview. Now what?,thread,https://news.ycombinator.com/item?id=43108673,ok,59908,10338,125,True
+24,hn-hiring-broken,"Hacker News — The Tech Hiring Process Is Broken (single long critique, 2 comments)",thread,https://news.ycombinator.com/item?id=39329929,ok,9826,1701,3,True
+25,google-official-prep,Google Careers — official SWE interview prep guide,official,https://www.google.com/about/careers/applications/candidate-prep/swe,ok,200,28,8,False
