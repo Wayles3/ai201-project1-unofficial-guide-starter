@@ -9,10 +9,23 @@
 
 ## Domain
 
-<!-- What topic or category of knowledge does your system cover?
-     Why is this knowledge valuable, and why is it hard to find through official channels?
-     Example: "Student reviews of CS professors at [university] — useful because official
-     course descriptions don't reflect teaching style, exam difficulty, or workload." -->
+New-grad software engineering interview preparation: what the hiring process at large tech
+companies actually looks like from the candidate's side — how many rounds there are, what LeetCode
+difficulty to expect, whether interviewers give hints, how much preparation is realistic, and
+whether the first offer a company makes is negotiable.
+
+This is valuable and hard to find officially for a specific reason: official careers pages publish
+process-level advice ("explain your thought process") but not outcome-level detail — realistic
+timelines, question difficulty, whether a given number is normal. Google's own SWE prep page
+([documents/25-google-official-prep.txt](documents/25-google-official-prep.txt)) is client-rendered
+and yields **200 characters of navigation labels** when fetched as text; it contains no retrievable
+guidance at all. The operational detail candidates actually need — "was 175 LeetCode problems
+enough," "do Expedia interviewers give hints" — exists only in scattered first-hand accounts: forum
+threads, personal blog postmortems, and interviewer-side data posts. It is also unusually
+perishable: the 2026 hiring market has shifted toward in-person interviews in response to
+AI-assisted cheating (measured at 72.4% of recruiting leaders, per a Gartner survey reported by
+Computerworld), so advice even two years old can be confidently wrong, and no official source flags
+which parts have expired.
 
 ---
 
@@ -22,18 +35,42 @@
      Be specific: include URLs, subreddit names, forum thread titles, or file names.
      Aim for variety — sources that together cover different subtopics or perspectives. -->
 
+All 25 sources are collected by `collect_documents.py`; 24 are indexed (source 25 is kept as a
+deliberate contrast example — see Domain above — but excluded because it has no extractable text).
+
 | # | Source | Type | URL or file path |
 |---|--------|------|-----------------|
-| 1 | | | |
-| 2 | | | |
-| 3 | | | |
-| 4 | | | |
-| 5 | | | |
-| 6 | | | |
-| 7 | | | |
-| 8 | | | |
-| 9 | | | |
-| 10 | | | |
+| 1 | Tech Interview Handbook — SWE interview guide | guide | `documents/01-swe-interview-guide.txt` |
+| 2 | Tech Interview Handbook — behavioral interview | guide | `documents/02-behavioral-interview.txt` |
+| 3 | Tech Interview Handbook — behavioral questions | guide | `documents/03-behavioral-questions.txt` |
+| 4 | Tech Interview Handbook — coding study plan | guide | `documents/04-coding-study-plan.txt` |
+| 5 | Tech Interview Handbook — coding rubrics | guide | `documents/05-coding-rubrics.txt` |
+| 6 | Tech Interview Handbook — behavioral rubrics | guide | `documents/06-behavioral-rubrics.txt` |
+| 7 | Tech Interview Handbook — negotiation | guide | `documents/07-negotiation.txt` |
+| 8 | Tech Interview Handbook — negotiation rules | guide | `documents/08-negotiation-rules.txt` |
+| 9 | Tech Interview Handbook — resume guide | guide | `documents/09-resume.txt` |
+| 10 | System Design Primer (GitHub README) | guide | `documents/10-system-design-primer.txt` |
+| 11 | interviewing.io — interview performance is kind of arbitrary | blog | `documents/11-iio-arbitrary.txt` |
+| 12 | interviewing.io — 5 problem areas from 600+ interviews | blog | `documents/12-iio-600-interviews.txt` |
+| 13 | interviewing.io — the technical interview practice gap | blog | `documents/13-iio-practice-gap.txt` |
+| 14 | interviewing.io — language and code style analysis | blog | `documents/14-iio-language-style.txt` |
+| 15 | Levels.fyi — Ultimate Negotiation Guide | guide | `documents/15-levels-negotiation-guide.txt` |
+| 16 | Andrei Marchenko — Cracking the FAANG interview (2024) | blog | `documents/16-marchenko-postmortem.txt` |
+| 17 | Computerworld — companies bring back in-person interviews | news | `documents/17-computerworld-ai-cheating.txt` |
+| 18 | Levels.fyi Community — new grad, Expedia/Blue Origin/eBay | thread | `documents/18-levels-newgrad-expedia.txt` |
+| 19 | Levels.fyi Community — how I studied for Amazon SWE | thread | `documents/19-levels-amazon-study.txt` |
+| 20 | Levels.fyi Community — Meta interview, superficial and rushed | thread | `documents/20-levels-meta-rushed.txt` |
+| 21 | Levels.fyi Community — Netflix new grad process (2022) | thread | `documents/21-levels-netflix-newgrad.txt` |
+| 22 | Levels.fyi Community — PayPal new grad interview | thread | `documents/22-levels-paypal-newgrad.txt` |
+| 23 | Hacker News — "AI killed the tech interview. Now what?" (628 comments, sampled breadth-first) | thread | `documents/23-hn-ai-killed-interview.txt` |
+| 24 | Hacker News — "The Tech Hiring Process Is Broken" (single long critique) | thread | `documents/24-hn-hiring-broken.txt` |
+| 25 | Google Careers — official SWE prep guide (excluded from index; kept as evidence) | official | `documents/25-google-official-prep.txt` |
+
+Variety across the corpus: guides cover structured advice (behavioral, resume, negotiation, system
+design); blogs and the news article carry data-driven or narrative claims with specific numbers;
+threads carry short, contradictory, first-hand opinions, including one thread with zero replies
+(source 21) and one thread whose replies never address the companies it names (source 18) — both
+kept deliberately, see Anticipated Challenges in `planning.md`.
 
 ---
 
@@ -258,9 +295,46 @@ artifact as Chunk 3.
      Consider: context length limits, multilingual support, accuracy on domain-specific text,
      latency, and local vs. API-hosted. -->
 
-**Model used:**
+**Model used:** `all-MiniLM-L6-v2` via `sentence-transformers`, run locally. 384 dimensions, ~256
+word-piece input limit (this is the constraint that set the 800-character chunk-size ceiling in the
+Chunking Strategy section — anything longer is silently truncated before embedding). Text embedded
+is the heading breadcrumb plus the chunk body, not the chunk alone, so a chunk about "Rora" carries
+the heading path that identifies Rora as a negotiation service.
 
-**Production tradeoff reflection:**
+Chosen for one practical reason: it runs offline with no API key, no per-query cost, and no rate
+limit, which matters for an iterate-and-re-embed workflow like this project's — the index was
+rebuilt more than a dozen times while tuning chunk size and overlap.
+
+**Production tradeoff reflection.** If this were deployed for real users and cost were not a
+constraint, in order of what actually caused friction while building this system:
+
+1. **Context length.** The 256 word-piece limit is what forced the 800-character chunk ceiling,
+   which in turn forced the paragraph→sentence→hard-cut fallback ladder described in Chunking
+   Strategy. A model with an 8k context window (OpenAI `text-embedding-3-large`, Voyage, Cohere
+   Embed v3) would let a chunk be an entire thread or guide section, removing most of that
+   complexity in one move.
+2. **Domain vocabulary.** Measured directly: `all-MiniLM-L6-v2` places "Is Blind 75 enough
+   preparation?" only 0.464 cosine-similar to its plain-English paraphrase ("Is a curated list of 75
+   practice problems enough preparation?"). The model was trained on general web text and only
+   partially knows this domain's jargon (`E5`, `Blind 75`, `tight loop`). A hybrid retriever that
+   adds keyword (BM25) matching alongside semantic search would catch exact jargon a pure embedding
+   model misses.
+3. **Asymmetric retrieval.** Matching a short question to a long passage is a different task from
+   comparing two similar-length sentences, which is closer to what this model was trained on. A
+   model with explicit query/passage prefixes (E5, BGE) is built for exactly this asymmetry. Tested
+   the more obvious fix — `multi-qa-MiniLM-L6-cos-v1`, trained specifically for question→passage
+   retrieval — and it made the out-of-scope refusal problem *worse*, not better: it correctly
+   identified negotiation advice as the best available answer to a mortgage-negotiation question,
+   which is the right behaviour for the training objective and the wrong one for this system. The
+   lesson generalizes: a "better" retrieval model can sharpen a false positive as readily as a true
+   one, so any embedding-model swap needs to be measured against out-of-scope controls, not just
+   against the target queries.
+4. **Latency and privacy.** Local embedding costs nothing per query and sends no user question to a
+   third party. An API-hosted model adds network latency and a data-sharing surface — a reasonable
+   trade for a product at scale, not for this project.
+5. **Multilingual support.** Not a live need — the corpus is entirely English — though
+   `system-design-primer` ships translated READMEs, whose language-switcher rows are exactly what
+   the non-prose chunk filter (Chunking Strategy) exists to drop.
 
 ---
 
@@ -353,9 +427,64 @@ prompt, which can read that software-engineering interview advice does not answe
      Do not just say "I told it to use the documents" — show the actual instruction or explain
      the mechanism. -->
 
-**System prompt grounding instruction:**
+**System prompt grounding instruction** (full text in `answer.py`, `SYSTEM_PROMPT`):
 
-**How source attribution is surfaced in the response:**
+```
+You are a research assistant answering questions about software engineering
+interview preparation. You answer ONLY from the numbered SOURCES supplied in
+the user message. You have no other knowledge available to you for this task.
+
+Rules, in order of priority:
+
+1. GROUND EVERY CLAIM. After each factual statement, cite the source it came
+from as [S1], [S2], etc. A statement with no citation is not allowed.
+
+2. REFUSE WHEN THE SOURCES DO NOT ANSWER THE QUESTION. If the sources are
+about a different subject than the question asks about, say exactly what you
+do and do not have... This applies even when the sources are on an adjacent
+topic that shares vocabulary with the question -- for example, sources about
+software engineering interviews do not answer a question about nursing
+interviews, and sources about salary negotiation do not answer a question
+about mortgage or rent negotiation.
+
+3. REPORT DISAGREEMENT, DO NOT RESOLVE IT. If two sources conflict, say so
+and attribute each position... Do not average them.
+
+4. DO NOT GENERALISE FROM A NARROWER SOURCE. If the question names a
+specific company and the sources discuss interviewing generally, say the
+sources do not cover that company specifically.
+
+5. FLAG AGE WHEN IT MATTERS.
+
+6. QUOTE NUMBERS EXACTLY as they appear.
+```
+
+Rule 2's explicit adjacent-domain examples exist because a relevance-score cutoff alone cannot make
+this decision: measured on the real index, "What are good interview questions for a nursing job?"
+scores **0.460** best-match similarity, which is *higher* than the legitimate in-domain question
+"Should I take the first offer?" at 0.451. The two bands overlap (window = −0.009 across 10
+in-domain and 6 out-of-domain test questions), so no single number distinguishes them. Grounding is
+therefore enforced in **three places, not one**:
+
+1. **Retrieval floor** (`RELEVANCE_FLOOR = 0.35` in `query_index.py`) — a cheap pre-filter that
+   rejects only queries with no plausible relationship to the corpus at all (e.g. "capital of
+   Australia" scores 0.161). If nothing clears it, the LLM is never called, and the refusal is
+   generated directly from the retrieval scores.
+2. **Context structure** — retrieved chunks are numbered `[S1]`…`[Sk]` and each is labelled with
+   its source type, title, section heading, URL and similarity score before being handed to the
+   model (`answer.py`, `build_context()`). This is what makes per-claim citation and disagreement
+   detection possible — the model is shown *which* source said what, not one undifferentiated block
+   of text.
+3. **The system prompt itself** — the only stage that can catch an adjacent-domain question, because
+   deciding "this shares vocabulary but is a different topic" requires reading the text, which a
+   cosine distance cannot do.
+
+**How source attribution is surfaced in the response.** Every factual sentence in the model's answer
+must carry an inline `[S1]`-style citation (enforced by prompt rule 1, spot-checked in the
+Evaluation Report below). Below the answer, `format_sources()` prints a numbered list matching each
+`[Sn]` to its title, source type, similarity score, filename + position within that document, and
+URL — so a citation can be followed back to the exact retrieved passage, not just to a document
+name.
 
 ---
 
@@ -367,29 +496,38 @@ prompt, which can read that software-engineering interview advice does not answe
 
 **Grounded response 1**
 
-Query:
+Query: *"How many LeetCode problems did someone solve before passing a FAANG interview, and what was the difficulty split?"*
 
 Response:
+> He solved 175 LeetCode problems in total, broken down as 52 easy, 106 medium, and 17 hard tasks before passing his FAANG interview [S1].
 
-Source attribution:
+Source attribution: `[S1]` Andrei Marchenko — Cracking the FAANG interview (2024), blog, similarity 0.666, `documents/16-marchenko-postmortem.txt`, chunk 21/34, https://amarchenko.dev/blog/2024-01-17-interview-experience/
 
 ---
 
 **Grounded response 2**
 
-Query:
+Query: *"Is the first offer a company gives the best package they can offer?"*
 
 Response:
+> No. According to the Tech Interview Handbook's negotiation guide, "The initial offer that you are given is never the best package that the company can offer" — the guide advises that most offers have room for negotiation and you can usually improve the terms [S2].
 
-Source attribution:
+Source attribution: `[S2]` Tech Interview Handbook — negotiation, guide, similarity 0.516, `documents/07-negotiation.txt`, chunk 1/8, https://raw.githubusercontent.com/yangshun/tech-interview-handbook/main/apps/website/contents/negotiation.md
+(Retrieval returned `08-negotiation-rules.txt` at higher similarity as `[S1]`, but the model correctly attributed the exact quoted claim to `[S2]`, the source that actually contains that sentence — a check worth doing explicitly, since a citation to the wrong same-topic source would not otherwise be obvious.)
 
 ---
 
 **Out-of-scope query**
 
-Query:
+Query: *"What is the best way to negotiate a mortgage rate?"*
 
 System response (refusal):
+> My sources don't cover this. They discuss negotiating job offers, compensation expectations, and negotiation services for tech positions, not how to negotiate a mortgage rate.
+
+This is the hardest realistic refusal case, not the easiest: the query scores 0.440 similarity
+against the corpus (well above the 0.35 retrieval floor, so the LLM *is* called) because
+"negotiate" is genuinely shared vocabulary with the negotiation sources. Refusal here is produced
+entirely by prompt rule 2 reading the retrieved text, not by the retrieval floor.
 
 ---
 
@@ -398,20 +536,37 @@ System response (refusal):
 <!-- Describe your query interface: what are the input fields, what does the output look like?
      Then provide a complete sample interaction transcript showing a real exchange. -->
 
-**Input fields:**
+**Input fields:** A single free-text question box (Gradio, `app.py`). Also usable directly from the
+command line: `.venv/bin/python answer.py "<question>"`. Both call the same `answer()` function in
+`answer.py`, so behaviour is identical regardless of interface.
 
-**Output format:**
+**Output format:** A Markdown-rendered answer with inline `[S1]`-style citations, followed by a
+numbered source list — for each cited source: title, source type, similarity score, filename,
+chunk position within its document, and URL. If nothing clears the relevance floor, the answer area
+shows the refusal text and the source list is replaced with a note naming which stage refused.
+
+Run the interface with `.venv/bin/python app.py`, which opens a local Gradio page at
+`http://127.0.0.1:7860`.
 
 ---
 
 **Sample Interaction Transcript**
 
-<!-- Show a complete query → response exchange as it actually appears in your interface.
-     Must be text — not a screenshot. -->
+> **User:** How difficult are the LeetCode questions in entry-level interviews, and do interviewers give hints?
 
-> **User:** 
-
-> **System:** 
+> **System:**
+> The experience shared in the Levels.fyi thread notes that entry-level LeetCode-style questions are **typically of medium difficulty**. Interviewers usually **listen to your thought process** and will often **guide you toward a solution or even give a hint** if you're stuck [S1].
+>
+> **Sources**
+> ```
+> [S1] Levels.fyi — New grad interview experience (Expedia Group, Blue Origin, eBay)  (thread, sim 0.727)
+>       18-levels-newgrad-expedia.txt chunk 4/6
+>       https://www.levels.fyi/community/thread/1LBjuA/new-grad-interview-experience--expedia-group-blue-origin-ebay
+> [S2] (same thread, chunk 0/6)
+> [S3] Hacker News — AI killed the tech interview. Now what?  (thread, sim 0.599)
+> [S4] Tech Interview Handbook — SWE interview guide  (guide, sim 0.579)
+> [S5] Hacker News — AI killed the tech interview. Now what?  (thread, sim 0.570)
+> ```
 
 ---
 
@@ -421,16 +576,24 @@ System response (refusal):
      Be honest — a partially accurate or inaccurate result that you explain well is more
      valuable than a suspiciously perfect result. -->
 
+Run via `.venv/bin/python run_eval.py`, which calls the live pipeline (retrieval + Groq generation)
+for each question. Full transcripts in that script's output; summarized here.
+
 | # | Question | Expected answer | System response (summarized) | Retrieval quality | Response accuracy |
 |---|----------|-----------------|------------------------------|-------------------|-------------------|
-| 1 | | | | | |
-| 2 | | | | | |
-| 3 | | | | | |
-| 4 | | | | | |
-| 5 | | | | | |
+| 1 | How many LeetCode problems did an engineer report solving before passing a FAANG interview, and what was the difficulty split? | 175 total — 52 easy, 106 medium, 17 hard | "He solved 175 LeetCode problems in total, broken down as 52 easy, 106 medium, and 17 hard tasks before passing his FAANG interview [S1]." | Relevant (top-1 sim 0.666, correct source ranked #1) | Accurate |
+| 2 | What share of recruiting leaders are conducting interviews in person to combat candidate fraud? | 72.4% | "According to a recent Gartner survey, 72.4% of recruiting leaders say they are now conducting interviews in-person to combat candidate fraud [S1][S2]." | Relevant (top-1 sim 0.736, correct source ranked #1) | Accurate |
+| 3 | What difficulty are LeetCode questions in entry-level interviews, and do interviewers give hints? | Mostly mediums; interviewers usually guide you or give a hint | "...entry-level LeetCode-style questions are typically of medium difficulty. Interviewers usually listen to your thought process and will often guide you toward a solution or even give a hint if you're stuck [S1]." | Relevant (top-1 sim 0.727, correct source ranked #1) | Accurate |
+| 4 | Is the first offer a company gives the best package they can offer? | No — the initial offer is never the best package | "No. ... 'The initial offer that you are given is never the best package that the company can offer' — the guide advises... you can usually improve the terms [S2]." | Relevant (correct source at rank #2, sim 0.516; a same-topic sibling source, `08-negotiation-rules.txt`, ranked #1 at 0.542) | Accurate — and the model correctly attributed the exact quoted claim to the source that actually contains it, not to the higher-ranked sibling |
+| 5 | How much more often do women abandon interview practice than men after a single bad interview? | 7 times more often | "Women quit interview practice about 7 times more often than men after just one bad interview — as reported in both the 'technical interview practice gap' post and the 'interview performance is kind of arbitrary' post [S1][S2]." | Relevant (top-1 sim 0.702) | **Partially accurate** — the "7 times" figure is correct, but "reported in both posts" overstates independent corroboration: `11-iio-arbitrary.txt` and `13-iio-practice-gap.txt` contain the **identical sentence** ("In a previous post, we talked about how women quit interview practice 7 times more often...") because one interviewing.io post is referencing the other, not because two separate studies converged on the number. The system had no way to detect this — both chunks score 0.665, are literally the same text, and nothing in the metadata marks one as a self-citation of the other. |
 
-**Retrieval quality:** Relevant / Partially relevant / Off-target  
+**Retrieval quality:** Relevant / Partially relevant / Off-target
 **Response accuracy:** Accurate / Partially accurate / Inaccurate
+
+**Summary: 4/5 fully accurate, 1/5 partially accurate. 5/5 retrieval relevant.** The one downgrade
+is a subtler failure than a wrong number — it is a true fact presented with slightly overstated
+evidentiary weight, catchable only by reading the cited sources closely enough to notice they share
+a sentence verbatim.
 
 ---
 
@@ -447,13 +610,56 @@ System response (refusal):
      "The embedding model treated the professor's nickname as out-of-vocabulary and returned
      results from an unrelated review" is an explanation. -->
 
-**Question that failed:**
+**Question that failed:** *"What was the Expedia new grad software engineer interview like?"* — not
+one of the five official evaluation questions, but a probe deliberately built from a corpus defect
+found while chunking (`planning.md`, Anticipated Challenges #1).
 
 **What the system returned:**
+> "The thread that discusses the Expedia Group new-grad interview only contains a brief comment
+> about the interview style. One respondent notes that 'they will likely be looking more to your
+> explanations and do more in-person interviews' [S1]. No other details about the difficulty of the
+> coding (LeetCode) questions, whether interviewers give hints, or the exact structure of the
+> process are provided in the sources."
 
-**Root cause (tied to a specific pipeline stage):**
+**Root cause, tied to a specific pipeline stage — generation, not retrieval.** Retrieval did its job
+correctly: it found `18-levels-newgrad-expedia.txt` at similarity 0.721 and ranked it first. The
+underlying corpus defect is real — this thread's title names Expedia, Blue Origin and eBay, and
+**none of its six replies mentions any of the three companies**; the quoted reply is generic
+commentary about AI tools and the hiring market in general. Chunking already defends against this
+by prepending the thread's opening post (which names the companies) to every reply chunk
+(`chunk_documents.py`, thread policy), specifically so the model can see that a reply doesn't
+actually address the question.
 
-**What you would change to fix it:**
+That defense partially worked and partially backfired. It worked in that the model did not invent
+LeetCode-difficulty or hint-giving details for Expedia — it correctly said no such details exist.
+But it backfired in framing: by calling this "the thread that discusses the Expedia Group new-grad
+interview" and describing the quoted reply as being "about the interview style," the response
+implies the reply characterizes Expedia's process specifically, when the reply never says anything
+company-specific at all. The system prompt's rule 4 ("do not generalise from a narrower source")
+tells the model not to attribute general claims to a named company, but the instruction is not
+precise enough to stop the *thread-level* framing from doing exactly that by proximity — the reply
+sits inside a chunk whose opening post names Expedia, and the model treated "in this Expedia thread"
+as loosely equivalent to "about Expedia," which they are not.
+
+This is worth stating plainly: **grounding was structurally correct (every claim traces to a real
+retrieved chunk) and still misleading**, because grounding guarantees a citation exists, not that
+the cited text supports the specific attribution the sentence around it implies. A grader — or a
+job-seeking user — reading only the response's first sentence would come away believing the corpus
+says something specific about Expedia's interview style. It does not.
+
+**What I would change to fix it:** Two independent fixes, addressing retrieval and generation
+separately since this is a compound problem:
+
+1. **Generation**: sharpen the system prompt with this exact scenario as a worked example — instead
+   of the general "do not generalise" rule, an explicit instruction to check whether a reply's own
+   text names the entity the question asks about, and if not, say the *reply* (not just "the
+   sources" in the abstract) does not address it by name.
+2. **Chunking/retrieval**: tag, in chunk metadata, whether a reply's own text contains any of the
+   named entities from its thread's opening post. A chunk lacking that overlap could be surfaced to
+   generation with an explicit flag ("this reply does not itself mention: Expedia, Blue Origin,
+   eBay"), turning a fact the pipeline already knows (retrieval computed the opening post
+   separately from the reply) into a signal generation can act on, rather than relying on the LLM to
+   notice it unprompted.
 
 ---
 
@@ -462,9 +668,28 @@ System response (refusal):
 <!-- Reflect on how planning.md shaped your implementation.
      Answer both questions with at least 2–3 sentences each. -->
 
-**One way the spec helped you during implementation:**
+**One way the spec helped you during implementation:** Writing the Chunking Strategy section
+*before* touching code forced a decision — 800 characters, 300 overlap — that later turned out to
+be wrong on the first try (400/200 made packing completely inert; verified directly: 0 of 879
+chunks ever merged more than one paragraph), but having a stated number and a stated reason meant
+the failure was measurable rather than a vague "chunks look off." Every subsequent fix in this
+project followed the same shape: state a number in planning.md, measure it against the real corpus,
+and correct the document when the measurement disagreed with the guess. Without the spec's insistence
+on committing to specific numbers up front, tuning would have had no baseline to compare against.
 
-**One way your implementation diverged from the spec, and why:**
+**One way your implementation diverged from the spec, and why:** The spec's guiding questions frame
+the relevance floor as something you tune once against a handful of queries. In practice, a floor
+tuned against only the five evaluation questions (0.48) looked correct — worst in-scope score 0.542
+vs best out-of-scope 0.440 — and then **falsely refused** a legitimate in-domain question ("Is
+grinding LeetCode worth the time?", 0.461) once tested against a wider set. Widening the test to 10
+in-domain and 6 out-of-domain questions showed the two bands overlap entirely (window = −0.009), so
+no single threshold can carry the scope decision. The implementation diverged from a single-floor
+design to a two-stage one: a low floor (0.35) that rejects only the unambiguously unrelated, with
+the system prompt handling adjacent-domain refusal by reading the retrieved text. This wasn't a
+spec failure — the spec's own guiding question ("what happens if you retrieve too few / too many")
+is what prompted testing beyond the five questions in the first place — but the single-cutoff
+design it implies did not survive contact with this corpus's vocabulary overlap between adjacent
+domains (negotiation, interviewing).
 
 ---
 
@@ -479,14 +704,31 @@ System response (refusal):
      chunk_text(). It returned a function using a fixed character split. I overrode the
      chunk size from 500 to 200 because my documents are short reviews, not long guides." -->
 
-**Instance 1**
+**Instance 1 — chunking parameters, wrong on the first try**
 
-- *What I gave the AI:*
-- *What it produced:*
-- *What I changed or overrode:*
+- *What I gave the AI:* the embedding model's ~256 word-piece truncation limit, and an instruction
+  to scaffold `chunk_documents.py` with the packing function left as a `TODO` for me to implement
+  myself rather than write it wholesale — I wanted to write the actual decision-carrying code.
+- *What it produced:* a working scaffold, plus an initial suggested chunk size of 400 characters
+  with 200 overlap ("guidance, not answers" — explicitly a starting guess, not a final number).
+- *What I changed or overrode:* after implementing and running the packer, the diagnostic output
+  showed 0 of 879 chunks ever merged more than one paragraph — 400 chars was smaller than most
+  individual paragraphs (median 266, many longer), so nothing ever got combined. I raised the
+  target to 800 and the overlap to 300 after measuring the actual paragraph-length distribution in
+  my documents, rather than accepting either the AI's first guess or an arbitrary round number.
 
-**Instance 2**
+**Instance 2 — a content filter that deleted the wrong thing**
 
-- *What I gave the AI:*
-- *What it produced:*
-- *What I changed or overrode:*
+- *What I gave the AI:* the observation that `system-design-primer` (one of my 24 sources) contains
+  markdown tables and a table of contents that are pure link lists, and an instruction to filter
+  chunks like that out of the index.
+- *What it produced:* a first-pass rule that dropped any chunk where most lines started with `|`
+  (a markdown table row). It ran without errors and reported "50 chunks dropped as non-prose."
+- *What I changed or overrode:* rather than trust the count, I read the printed samples of what got
+  dropped — and the rule had also deleted the coding-interview-rubrics scoring table and the
+  study-plan priority table from two entirely different source documents, which are genuine content,
+  not navigation. I had the AI replace the rule with one that measures the fraction of a chunk's
+  characters that are link markup specifically (URLs, markdown link targets) rather than table
+  syntax generally, and we validated the new threshold by measuring the actual separation between
+  content tables (0.05–0.74) and link tables (0.81–0.99) in my corpus before trusting it. Reading the
+  dropped samples, not the count, is what caught this — a count alone looked fine.

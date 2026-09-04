@@ -1,0 +1,110 @@
+==============================================================================
+EVALUATION RUN   top_k=5   floor=0.35
+==============================================================================
+
+
+##### PART 1: the five evaluation questions #####
+
+------------------------------------------------------------------------------
+Q1: How many LeetCode problems did someone solve before passing a FAANG interview, and what was the difficulty split?
+------------------------------------------------------------------------------
+He solved 175 LeetCode problems in total, broken down as 52 easy, 106 medium, and 17 hard tasks before passing his FAANG interview [S1].
+
+sources given to model: S1=16-marchenko-postmortem.txt, S2=16-marchenko-postmortem.txt, S3=12-iio-600-interviews.txt, S4=12-iio-600-interviews.txt, S5=05-coding-rubrics.txt
+top similarity: 0.666  (distance 0.334)
+
+expected: 175 total: 52 easy, 106 medium, 17 hard (Marchenko, amarchenko.dev, Jan 2024)
+contains '175': YES
+
+------------------------------------------------------------------------------
+Q2: What share of recruiting leaders are conducting interviews in person to combat candidate fraud?
+------------------------------------------------------------------------------
+According to a recent Gartner survey, 72.4 % of recruiting leaders say they are now conducting interviews in‑person to combat candidate fraud【S1】【S2】.
+
+sources given to model: S1=17-computerworld-ai-cheating.txt, S2=17-computerworld-ai-cheating.txt, S3=13-iio-practice-gap.txt, S4=23-hn-ai-killed-interview.txt, S5=23-hn-ai-killed-interview.txt
+top similarity: 0.736  (distance 0.264)
+
+expected: 72.4% (Gartner survey, via Computerworld)
+contains '72.4': YES
+
+------------------------------------------------------------------------------
+Q3: How difficult are the LeetCode questions in entry-level interviews, and do interviewers give hints?
+------------------------------------------------------------------------------
+The experience shared in the Levels.fyi thread indicates that entry‑level LeetCode‑style questions are typically of **medium difficulty**. The respondent notes that “most leetcode style questions are usually mediums” [S1]. When you walk the interviewer through your thinking, they “will usually guide you in the right direction, or maybe even a hint” [S1].
+
+sources given to model: S1=18-levels-newgrad-expedia.txt, S2=18-levels-newgrad-expedia.txt, S3=23-hn-ai-killed-interview.txt, S4=01-swe-interview-guide.txt, S5=23-hn-ai-killed-interview.txt
+top similarity: 0.727  (distance 0.273)
+
+expected: Mostly mediums; interviewers usually guide you or give a hint if you explain your thought process
+contains 'medium': YES
+
+------------------------------------------------------------------------------
+Q4: Is the first offer a company gives the best package they can offer?
+------------------------------------------------------------------------------
+No. According to the Tech Interview Handbook’s negotiation guide, “The initial offer that you are given is never the best package that the company can offer” — the guide advises that most offers have room for negotiation and you can usually improve the terms [S2].
+
+sources given to model: S1=08-negotiation-rules.txt, S2=07-negotiation.txt, S3=08-negotiation-rules.txt, S4=15-levels-negotiation-guide.txt, S5=15-levels-negotiation-guide.txt
+top similarity: 0.542  (distance 0.458)
+
+expected: No -- the initial offer is never the best package; recruiters expect negotiation
+contains 'never': YES
+
+------------------------------------------------------------------------------
+Q5: How much more often do women abandon interview practice than men after a single bad interview?
+------------------------------------------------------------------------------
+Women quit interview practice 7 times more often than men after just one bad interview [S1][S2].
+
+sources given to model: S1=13-iio-practice-gap.txt, S2=11-iio-arbitrary.txt, S3=14-iio-language-style.txt, S4=13-iio-practice-gap.txt, S5=14-iio-language-style.txt
+top similarity: 0.702  (distance 0.298)
+
+expected: 7 times more often (interviewing.io)
+contains '7': YES
+
+
+##### PART 2: refusals #####
+
+------------------------------------------------------------------------------
+Q: What is the best way to negotiate a mortgage rate?
+------------------------------------------------------------------------------
+My sources don't cover this. They discuss negotiating job offers, compensation packages, and related interview scenarios, not how to negotiate a mortgage rate.
+
+sources given to model: S1=15-levels-negotiation-guide.txt, S2=07-negotiation.txt, S3=15-levels-negotiation-guide.txt, S4=07-negotiation.txt
+top similarity: 0.440  (distance 0.560)
+
+should be caught by: prompt (adjacent domain)
+
+------------------------------------------------------------------------------
+Q: What are good interview questions for a nursing job?
+------------------------------------------------------------------------------
+My sources don't cover this. They discuss technical and behavioral interview preparation for software engineering roles (e.g., common problem areas in technical interviews, typical “Tell me about yourself” and other behavioral questions, and examples of questions used at companies like Airbnb) — not interview questions for a nursing job.
+
+sources given to model: S1=12-iio-600-interviews.txt, S2=02-behavioral-interview.txt, S3=03-behavioral-questions.txt, S4=12-iio-600-interviews.txt, S5=06-behavioral-rubrics.txt
+top similarity: 0.460  (distance 0.540)
+
+should be caught by: prompt (adjacent domain)
+
+------------------------------------------------------------------------------
+Q: What is the capital of Australia?
+------------------------------------------------------------------------------
+[refused at retrieval]
+My sources don't cover this. Nothing in the corpus came close enough to the question (best similarity 0.161, floor 0.35).
+
+should be caught by: retrieval floor
+
+
+##### PART 3: the attribution trap #####
+
+------------------------------------------------------------------------------
+Q: What was the Expedia new grad software engineer interview like?
+------------------------------------------------------------------------------
+The only information the sources provide about the Expedia new‑grad interview comes from a Levels.fyi thread where a candidate asked how “difficult were the leetcode questions, did the interviewers give hints, etc.” One reply said that “they will likely be looking more to your explanations and do more in‑person interviews” [S1]. No further details about the specific LeetCode difficulty, hint‑giving, or other stages are given in the excerpts.
+
+sources given to model: S1=18-levels-newgrad-expedia.txt, S2=18-levels-newgrad-expedia.txt, S3=20-levels-meta-rushed.txt, S4=21-levels-netflix-newgrad.txt, S5=16-marchenko-postmortem.txt
+top similarity: 0.721  (distance 0.279)
+
+correct behaviour: Sources name Expedia in a thread title but no reply discusses Expedia, so the correct behaviour is to say the sources do not cover it.
+
+
+==============================================================================
+expected-phrase check: 5/5
+==============================================================================
