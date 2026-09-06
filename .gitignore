@@ -21,3 +21,7 @@ chroma/
 
 # Editor-local settings
 .vscode/
+
+# Raw scraped source documents -- regenerate with collect_documents.py.
+# chunks.json (tracked) already contains every chunk of this text.
+documents/
