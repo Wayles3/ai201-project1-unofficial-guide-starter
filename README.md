@@ -685,6 +685,20 @@ separately since this is a compound problem:
    separately from the reply) into a signal generation can act on, rather than relying on the LLM to
    notice it unprompted.
 
+**Update after re-testing (post the Instance 3 prompt fix in AI Usage).** Splitting the grounding
+prompt's overloaded rule — done to fix the 40% false-refusal problem, a different bug — also
+sharpened the language around named-entity attribution. Re-running this exact question 5 times
+afterward, the model correctly hedged in **5 of 5 runs** ("the sources only contain the original
+post and a brief, generic reply... no other details... are provided") instead of the framing quoted
+above. The underlying mechanism this section describes is still real and still findable — it is a
+property of how thread-level chunking and proximity interact, not something the prompt change
+removed from the pipeline — but it no longer reproduces reliably enough to demonstrate live on
+demand. This is itself worth recording: an LLM-level grounding fix can reduce the *rate* of a
+generation failure without eliminating its *cause*, and retrieval being fully deterministic
+(the same chunk, same rank, every run) does not make generation deterministic in turn. The
+duplicate-source citation issue in Evaluation Report row 5 does not have this problem — it depends
+only on retrieval, which is fixed — and is the more reliable failure to reproduce on demand.
+
 ---
 
 ## Spec Reflection
